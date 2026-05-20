@@ -10,3 +10,4 @@ scipy
 PyQt5
 pyqt5-tools
 anthropic
+flask

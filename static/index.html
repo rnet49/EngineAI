@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Engine AI">
+  <meta name="theme-color" content="#0f1117">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <title>Engine AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f1117;
+      color: #e5e7eb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: max(env(safe-area-inset-top), 32px) 20px max(env(safe-area-inset-bottom), 32px);
+    }
+
+    .container { width: 100%; max-width: 480px; }
+
+    .header { text-align: center; margin-bottom: 36px; }
+    .header h1 {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #fff;
+    }
+    .header p { color: #6b7280; font-size: 14px; margin-top: 6px; }
+
+    .upload-zone {
+      border: 2px dashed #2b3242;
+      border-radius: 16px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #151821;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+    .upload-zone:hover { border-color: #3b82f6; background: #1a2030; }
+    .upload-zone.drag-over { border-color: #3b82f6; background: #1a2030; }
+    .upload-zone .icon { font-size: 44px; margin-bottom: 12px; }
+    .upload-zone .label { color: #9ca3af; font-size: 15px; }
+    .upload-zone .hint { color: #4b5563; font-size: 13px; margin-top: 6px; }
+    .upload-zone.has-file .label { color: #60a5fa; font-weight: 600; }
+
+    #fileInput { display: none; }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      background: #3b82f6;
+      color: white;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 32px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .loader.visible { display: block; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid #2b3242;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+    }
+    .result.visible { display: block; }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px;
+    }
+    .result-header.anomaly { background: rgba(239,68,68,0.12); border-left: 4px solid #ef4444; }
+    .result-header.normal  { background: rgba(34,197,94,0.12);  border-left: 4px solid #22c55e; }
+    .result-icon { font-size: 36px; line-height: 1; }
+    .result-title { font-size: 24px; font-weight: 900; }
+    .result-title.anomaly { color: #ef4444; }
+    .result-title.normal  { color: #22c55e; }
+
+    .result-stats {
+      background: #151821;
+      padding: 14px 20px;
+      display: flex;
+      gap: 32px;
+      border-top: 1px solid #1f2937;
+    }
+    .stat label { color: #6b7280; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 3px; }
+    .stat span  { color: #d1d5db; font-size: 14px; font-family: monospace; }
+
+    .ai-block {
+      background: #151821;
+      border-top: 1px solid #1f2937;
+      padding: 16px 20px;
+    }
+    .ai-label {
+      color: #60a5fa;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .ai-text { color: #9ca3af; font-size: 14px; line-height: 1.65; }
+
+    .error-msg {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.4);
+      border-radius: 12px;
+      color: #ef4444;
+      font-size: 14px;
+    }
+    .error-msg.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>ENGINE AI</h1>
+      <p>Диагностика двигателей</p>
+    </div>
+
+    <div class="upload-zone" id="dropZone">
+      <div class="icon">🎵</div>
+      <div class="label" id="uploadLabel">Нажмите чтобы выбрать WAV файл</div>
+      <div class="hint">Длительность: 5–10 секунд</div>
+    </div>
+    <input type="file" id="fileInput" accept=".wav">
+
+    <button class="btn" id="analyzeBtn" disabled>Анализировать</button>
+
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      Анализируем звук...
+    </div>
+
+    <div class="result" id="result">
+      <div class="result-header" id="resultHeader">
+        <div class="result-icon" id="resultIcon"></div>
+        <div class="result-title" id="resultTitle"></div>
+      </div>
+      <div class="result-stats">
+        <div class="stat">
+          <label>Ошибка</label>
+          <span id="statError"></span>
+        </div>
+        <div class="stat">
+          <label>Порог</label>
+          <span id="statThreshold"></span>
+        </div>
+      </div>
+      <div class="ai-block">
+        <div class="ai-label">Engine AI</div>
+        <div class="ai-text" id="aiText"></div>
+      </div>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+  </div>
+
+  <script>
+    const dropZone   = document.getElementById("dropZone");
+    const fileInput  = document.getElementById("fileInput");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const loader     = document.getElementById("loader");
+    const result     = document.getElementById("result");
+    const errorMsg   = document.getElementById("errorMsg");
+    let selectedFile = null;
+
+    dropZone.addEventListener("click", () => fileInput.click());
+
+    dropZone.addEventListener("dragover", e => {
+      e.preventDefault();
+      dropZone.classList.add("drag-over");
+    });
+    dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+    dropZone.addEventListener("drop", e => {
+      e.preventDefault();
+      dropZone.classList.remove("drag-over");
+      if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files[0]) setFile(fileInput.files[0]);
+    });
+
+    function setFile(file) {
+      selectedFile = file;
+      document.getElementById("uploadLabel").textContent = file.name;
+      dropZone.classList.add("has-file");
+      analyzeBtn.disabled = false;
+      result.classList.remove("visible");
+      errorMsg.classList.remove("visible");
+    }
+
+    analyzeBtn.addEventListener("click", async () => {
+      if (!selectedFile) return;
+
+      analyzeBtn.disabled = true;
+      loader.classList.add("visible");
+      result.classList.remove("visible");
+      errorMsg.classList.remove("visible");
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      try {
+        const res  = await fetch("/analyze", { method: "POST", body: formData });
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        const isAnom = data.is_anomaly;
+        document.getElementById("resultHeader").className = "result-header " + (isAnom ? "anomaly" : "normal");
+        document.getElementById("resultIcon").textContent  = isAnom ? "❌" : "✅";
+        document.getElementById("resultTitle").textContent = isAnom ? "АНОМАЛИЯ" : "НОРМА";
+        document.getElementById("resultTitle").className   = "result-title " + (isAnom ? "anomaly" : "normal");
+        document.getElementById("statError").textContent     = data.recon_error.toFixed(6);
+        document.getElementById("statThreshold").textContent = data.threshold.toFixed(6);
+        document.getElementById("aiText").textContent        = data.ai;
+
+        result.classList.add("visible");
+      } catch (e) {
+        errorMsg.textContent = "Ошибка: " + e.message;
+        errorMsg.classList.add("visible");
+      } finally {
+        loader.classList.remove("visible");
+        analyzeBtn.disabled = false;
+      }
+    });
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  </script>
+</body>
+</html>
