@@ -31,7 +31,7 @@ python app.py
 
 Обученная модель хранится на Google Drive. Скачайте папку целиком и переместите её в папку со скриптом:
 
-[Скачать папку models](https://drive.google.com/drive/folders/1QT1LOH-Vx8JWNa30Vp-EtPx6B_L4gGtS?usp=sharing)
+[Скачать папку models](https://drive.google.com/drive/folders/1qdd5chxTVbZqdEG7aERoJTpNj4-gaEC0?usp=sharing)
 
 ## API ключ
 
