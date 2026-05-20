@@ -46,7 +46,7 @@ def load_dataset(folder="dataset"):
     return np.array(images)
 
 
-def train(folder="dataset", n_components=150):
+def train(folder="dataset", n_components=300):
     X = load_dataset(folder)
     pca = PCA(n_components=n_components)
     pca.fit(X)
