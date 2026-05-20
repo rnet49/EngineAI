@@ -27,12 +27,11 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## Папка models
+## Модель
 
-В папке `models/` хранится обученная PCA-модель:
+Обученная модель хранится на Google Drive. Скачайте папку целиком и переместите её в папку со скриптом:
 
-- `pca_model.pkl` — обученная модель
-- `threshold.npy` — порог ошибки
+[Скачать папку models](https://drive.google.com/drive/folders/1QT1LOH-Vx8JWNa30Vp-EtPx6B_L4gGtS?usp=sharing)
 
 ## API ключ
 
