@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1700</width>
+    <height>980</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>EngineAI</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+
+QMainWindow {
+    background-color: #0f1117;
+}
+
+QWidget {
+    background-color: #0f1117;
+    color: white;
+    font-family: Segoe UI;
+    font-size: 10pt;
+}
+
+QFrame#sidebar {
+    background-color: #151821;
+    border-right: 1px solid #252936;
+}
+
+QFrame#card {
+    background-color: #0f1117;
+    border: none;
+    border-radius: 18px;
+}
+
+QPushButton {
+    background-color: #2563eb;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 11pt;
+    font-weight: 900;
+    padding: 12px;
+}
+
+QPushButton:hover {
+    background-color: #1d4ed8;
+}
+
+QLabel#titleLabel {
+    font-size: 20pt;
+    font-weight: 900;
+}
+
+QLabel#logoLabel {
+    font-size: 19pt;
+    font-weight: 900;
+    background-color: #151821;
+}
+
+QLabel#sectionTitle, QLabel#sectionTitle1, QLabel#sectionTitle2, QLabel#sectionTitle3 {
+    font-size: 13pt;
+    font-weight: 900;
+}
+
+
+QLineEdit {
+    background-color: #111827;
+    border: 1px solid #2b3242;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+QComboBox {
+    background-color: #111827;
+    border: 1px solid #2b3242;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+QSpinBox {
+    background-color: #111827;
+    border: 1px solid #2b3242;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+QDoubleSpinBox {
+    background-color: #111827;
+    border: 1px solid #2b3242;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+QProgressBar {
+    background-color: #111827;
+    border: 1px solid #2b3242;
+    border-radius: 8px;
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: #22c55e;
+    border-radius: 8px;
+}
+
+QTextEdit {
+    background-color: #111827;
+    border: 1px solid #2b3242;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+QSlider::groove:horizontal {
+    background-color: #2b3242;
+    border-radius: 4px;
+    height: 6px;
+}
+
+QSlider::handle:horizontal {
+    background-color: #2563eb;
+    border-radius: 8px;
+    width: 16px;
+    height: 16px;
+    margin: -5px 0;
+}
+
+QSlider::sub-page:horizontal {
+    background-color: #2563eb;
+    border-radius: 4px;
+}
+
+   </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="mainLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="sidebar">
+      <property name="minimumSize">
+       <size>
+        <width>280</width>
+        <height>0</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="sidebarLayout">
+       <property name="spacing">
+        <number>16</number>
+       </property>
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>20</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>20</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="logoLayout">
+         <item>
+          <widget class="QLabel" name="logoLabel">
+           <property name="text">
+            <string>ENGINE AI</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="logoSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="infoButton">
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>?</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">
+QPushButton {
+    background-color: #1e2535;
+    border: 1px solid #2b3242;
+    border-radius: 16px;
+    color: #6b7280;
+    font-size: 14pt;
+    font-weight: 900;
+    padding: 0px;
+}
+QPushButton:hover {
+    background-color: #2563eb;
+    color: white;
+}
+            </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="loadAudioButton">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Загрузить аудио</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="playerLayout">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="playPauseButton">
+           <property name="minimumSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>▶</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="timeSlider">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="runButton">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Запустить анализ</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="contentLayout">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <property name="leftMargin">
+       <number>24</number>
+      </property>
+      <property name="topMargin">
+       <number>24</number>
+      </property>
+      <property name="rightMargin">
+       <number>24</number>
+      </property>
+      <property name="bottomMargin">
+       <number>24</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="spectrogramLayout">
+        <property name="spacing">
+         <number>20</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="card">
+          <layout class="QVBoxLayout" name="originalLayout">
+           <item>
+            <widget class="QLabel" name="sectionTitle">
+             <property name="text">
+              <string>Original</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="originalSpectrogramWidget" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>380</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">
+border-radius: 14px;
+border: 1px solid #2b3242;
+              </string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="card">
+          <layout class="QVBoxLayout" name="reconstructedLayout">
+           <item>
+            <widget class="QLabel" name="sectionTitle">
+             <property name="text">
+              <string>Reconstructed</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="reconstructedSpectrogramWidget" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>380</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">
+background-color: #111827;
+border-radius: 14px;
+border: 1px solid #2b3242;
+              </string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="bottomLayout">
+        <property name="spacing">
+         <number>20</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="card">
+          <layout class="QVBoxLayout" name="outputLayout">
+           <item>
+            <widget class="QLabel" name="sectionTitle">
+             <property name="text">
+              <string>Output:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="outputTextEdit">
+             <property name="html">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="plainText">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="progressBar">
+             <property name="value">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

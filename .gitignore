@@ -1,0 +1,29 @@
+# Сгенерированные файлы модели
+cache.pkl
+models/
+
+# Claude Code
+.claude/
+
+# Датасеты (большие файлы)
+train/
+dataset/
+filtered/
+
+# API ключ — не выкладывать в публичный доступ
+api_key.txt
+
+# Скрипты обучения (не нужны пользователю)
+main.py
+scripts/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# PyInstaller
+dist/
+build/
+*.spec

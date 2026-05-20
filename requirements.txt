@@ -1,0 +1,12 @@
+librosa
+numpy
+matplotlib
+joblib
+sounddevice
+soundfile
+Pillow
+scikit-learn
+scipy
+PyQt5
+pyqt5-tools
+anthropic
