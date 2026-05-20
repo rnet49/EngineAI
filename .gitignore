@@ -2,6 +2,10 @@
 cache.pkl
 models/
 
+# Веб интерфейс (только локально)
+web_api.py
+static/
+
 # Claude Code
 .claude/
 
